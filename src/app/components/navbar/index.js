@@ -4,7 +4,7 @@ import Button from "../button";
 import { buttons } from "@/app/data";
 import { usePathname } from "next/navigation";
 
-const Navbar = () => {
+const Navbar = ({ handleLogout, loading }) => {
   const pathname = usePathname();
 
   return (
@@ -12,7 +12,10 @@ const Navbar = () => {
       <div className="text-xl">ChatGPT</div>
       <div
         className={`flex items-center gap-5 ${
-          (pathname === "/login" || pathname === "/register") && "hidden"
+          (pathname === "/login" ||
+            pathname === "/register" ||
+            pathname === "/dashboard") &&
+          "hidden"
         }`}
       >
         {buttons?.map((button) => {
@@ -27,6 +30,13 @@ const Navbar = () => {
           );
         })}
       </div>
+      {pathname === "/dashboard" && (
+        <Button
+          text={!loading ? "logging out..." : "Log out"}
+          bgColor="red"
+          onClickFunction={handleLogout}
+        />
+      )}
     </div>
   );
 };

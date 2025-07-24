@@ -1,17 +1,23 @@
 "use client";
+
 import React, { useEffect } from "react";
 import Navbar from "../components/navbar";
 import RegisterationForm from "../registerationForm";
 import { useRouter } from "next/navigation";
+import { tokenCheck } from "../utils/tokenCheck";
 
 const Register = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
+  const verifyToken = async () => {
+    const tokenExists = await tokenCheck();
+    if (tokenExists) {
       router.push("/dashboard");
     }
+  };
+
+  useEffect(() => {
+    verifyToken();
   }, []);
 
   return (

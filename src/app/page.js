@@ -2,8 +2,24 @@
 import Navbar from "./components/navbar";
 import Wrapper from "./components/contentWrapper";
 import Prompt from "./components/prompt";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { tokenCheck } from "./utils/tokenCheck";
+import Sidebar from "./components/sidebar";
 
 const Home = () => {
+  const router = useRouter();
+
+  const verifyToken = async () => {
+    const tokenExists = await tokenCheck();
+    if (tokenExists) {
+      router.push("/dashboard");
+    }
+  };
+  useEffect(() => {
+    verifyToken();
+  }, []);
+
   return (
     <Wrapper>
       <Navbar />

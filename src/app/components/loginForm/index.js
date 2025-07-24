@@ -5,9 +5,11 @@ import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase.config";
 import { useRouter } from "next/navigation";
+import { tokenCheck } from "@/app/utils/tokenCheck";
 
 const LoginForm = () => {
   const router = useRouter();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,11 +29,23 @@ const LoginForm = () => {
     const { email, password } = formData;
     try {
       setLoading(true);
+
       const res = await signInWithEmailAndPassword(auth, email, password);
       const user = res.user;
-      localStorage.setItem("user", user.email);
+      const idToken = user.getIdToken().then((res) => res);
+
+      await fetch("/api/sessionLogin", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ idToken }),
+      });
+
       setFormData({ email: "", password: "" });
       setLoading(false);
+
       router.push("/dashboard");
     } catch (error) {
       setError(error.message);

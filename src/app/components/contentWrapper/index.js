@@ -2,21 +2,28 @@
 
 import React, { useEffect, useState } from "react";
 import AuthModal from "../authModal";
+import { tokenCheck } from "@/app/utils/tokenCheck";
 
 const Wrapper = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (!user) {
+  const verifyToken = async () => {
+    const tokenExists = await tokenCheck();
+    if (!tokenExists) {
       setShowModal(true);
     }
+  };
+
+  useEffect(() => {
+    verifyToken();
   }, []);
 
   return (
     <>
       <div
-        className={`p-4 h-screen relative ${showModal ? "blur-[2px]" : ""}`}
+        className={`p-4 w-full h-screen relative ${
+          showModal ? "blur-[2px]" : ""
+        }`}
         onClick={() => setShowModal(false)}
       >
         {children}
