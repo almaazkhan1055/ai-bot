@@ -5,7 +5,6 @@ import Prompt from "./components/prompt";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { tokenCheck } from "./utils/tokenCheck";
-import Sidebar from "./components/sidebar";
 
 const Home = () => {
   const router = useRouter();

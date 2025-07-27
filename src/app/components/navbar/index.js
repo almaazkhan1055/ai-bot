@@ -1,20 +1,30 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../button";
 import { buttons } from "@/app/data";
 import { usePathname } from "next/navigation";
+import { IoMdLogOut } from "react-icons/io";
+import { tokenCheck } from "@/app/utils/tokenCheck";
 
 const Navbar = ({ handleLogout, loading }) => {
+  const [tokenExists, settokenExists] = useState(false);
   const pathname = usePathname();
 
+  const verifyToken = async () => {
+    const tokenExists = await tokenCheck();
+    settokenExists(tokenExists);
+  };
+
+  useEffect(() => {
+    verifyToken();
+  }, []);
+
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between p-4 pb-2 border-b border-b-[#303030]">
       <div className="text-xl">ChatGPT</div>
       <div
         className={`flex items-center gap-5 ${
-          (pathname === "/login" ||
-            pathname === "/register" ||
-            pathname === "/dashboard") &&
+          (tokenExists || pathname === "/login" || pathname === "/register") &&
           "hidden"
         }`}
       >
@@ -30,12 +40,14 @@ const Navbar = ({ handleLogout, loading }) => {
           );
         })}
       </div>
-      {pathname === "/dashboard" && (
-        <Button
-          text={!loading ? "logging out..." : "Log out"}
-          bgColor="red"
-          onClickFunction={handleLogout}
-        />
+
+      {tokenExists && (
+        <span
+          className="flex items-center justify-center gap-2 cursor-pointer"
+          onClick={handleLogout}
+        >
+          <IoMdLogOut /> Logout
+        </span>
       )}
     </div>
   );

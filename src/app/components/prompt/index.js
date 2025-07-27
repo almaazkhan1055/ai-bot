@@ -9,7 +9,7 @@ const Prompt = () => {
   const [prompt, setprompt] = useState("");
 
   return (
-    <div className="bg-[#303030] w-[60%] rounded-3xl p-2">
+    <div className="bg-[#303030] md:w-[60%] w-full rounded-3xl p-2">
       <input
         type="text"
         placeholder="Ask anything"

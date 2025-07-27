@@ -21,9 +21,7 @@ const Wrapper = ({ children }) => {
   return (
     <>
       <div
-        className={`p-4 w-full h-screen relative ${
-          showModal ? "blur-[2px]" : ""
-        }`}
+        className={`w-full h-screen relative ${showModal ? "blur-[2px]" : ""}`}
         onClick={() => setShowModal(false)}
       >
         {children}

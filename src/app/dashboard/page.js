@@ -9,7 +9,7 @@ import Navbar from "../components/navbar";
 import Prompt from "../components/prompt";
 import Sidebar from "../components/sidebar";
 
-const Dashboard = () => {
+const Dashboard = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [tokenValid, setTokenValid] = useState(false);
   const router = useRouter();
@@ -38,12 +38,16 @@ const Dashboard = () => {
   if (!tokenValid) return null;
 
   return (
-    <div className="flex">
+    <div className="flex overflow-hidden">
       <Sidebar />
       <Wrapper>
         <Navbar handleLogout={handleLogout} loading />
-        <div className="min-h-full flex flex-col md:gap-10 items-center justify-center">
-          <h1 className="text-3xl font-semibold">ChatGPT</h1>
+        <div className="min-h-full flex flex-col md:gap-10 items-center justify-center p-4">
+          {children ? (
+            children
+          ) : (
+            <h1 className="text-3xl font-semibold">ChatGPT</h1>
+          )}
           <Prompt />
         </div>
       </Wrapper>
