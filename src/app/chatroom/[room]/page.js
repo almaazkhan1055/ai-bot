@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import React from "react";
-import Dashboard from "../page";
+import Dashboard from "../../dashboard/page";
 
 const ChatRoomPage = () => {
   const { room } = useParams();
