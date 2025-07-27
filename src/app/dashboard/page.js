@@ -44,11 +44,7 @@ const Dashboard = ({ children }) => {
       <Wrapper>
         <Navbar handleLogout={handleLogout} loading />
         <div className="min-h-full flex flex-col md:gap-10 items-center justify-center p-4">
-          {children ? (
-            children
-          ) : (
-            <h1 className="md:text-3xl text-xl font-semibold">{params.name}</h1>
-          )}
+          {children}
           <Prompt />
         </div>
       </Wrapper>

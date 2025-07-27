@@ -5,9 +5,13 @@ import Dashboard from "../page";
 
 const ChatRoomPage = () => {
   const params = useParams();
-  // console.log(params);
+  console.log(params.name);
 
-  return <Dashboard></Dashboard>;
+  return (
+    <Dashboard>
+      <h2>{params.name}</h2>
+    </Dashboard>
+  );
 };
 
 export default ChatRoomPage;
