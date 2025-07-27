@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { tokenCheck } from "../utils/tokenCheck";
 import { logout } from "../utils/logout";
 import Wrapper from "../components/contentWrapper";
@@ -13,6 +13,7 @@ const Dashboard = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [tokenValid, setTokenValid] = useState(false);
   const router = useRouter();
+  const params = useParams();
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -46,7 +47,7 @@ const Dashboard = ({ children }) => {
           {children ? (
             children
           ) : (
-            <h1 className="text-3xl font-semibold">ChatGPT</h1>
+            <h1 className="md:text-3xl text-xl font-semibold">{params.name}</h1>
           )}
           <Prompt />
         </div>

@@ -1,6 +1,6 @@
 import { chatRoomListRedux } from "@/app/redux/action";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import { CiChat1 } from "react-icons/ci";
 import { useDispatch } from "react-redux";
 
@@ -19,7 +19,7 @@ const NewChat = ({ isSidebarOpen, setIsSidebarOpen }) => {
     };
 
     dispatch(chatRoomListRedux(newRoom));
-    router.push(`/dashboard/${newRoom.name}`);
+    router.push(`/dashboard/${encodeURIComponent(newRoom.name)}`);
   };
 
   return (

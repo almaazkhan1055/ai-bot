@@ -57,7 +57,7 @@ const LoginForm = () => {
   return (
     <div className="text-center flex flex-col gap-5">
       <h2 className="text-2xl">Welcome back</h2>
-      <div className="text-sm rounded-full border border-gray-500 p-4 w-[320px]">
+      <div className="text-sm rounded-full border border-gray-500 p-4 md:w-[320px] max-w-[300px]">
         <input
           required
           value={formData.email}
@@ -68,7 +68,7 @@ const LoginForm = () => {
           onChange={handleFormData}
         />
       </div>
-      <div className="text-sm rounded-full border border-gray-500 p-4 w-[320px]">
+      <div className="text-sm rounded-full border border-gray-500 p-4 md:w-[320px] max-w-[300px]">
         <input
           required
           value={formData.password}

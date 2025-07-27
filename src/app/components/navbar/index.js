@@ -23,7 +23,7 @@ const Navbar = ({ handleLogout, loading }) => {
     <div className="flex items-center justify-between p-4 pb-2 border-b border-b-[#303030]">
       <div className="text-xl">ChatGPT</div>
       <div
-        className={`flex items-center gap-5 ${
+        className={`max-sm:flex-col flex items-center gap-5 ${
           (tokenExists || pathname === "/login" || pathname === "/register") &&
           "hidden"
         }`}
