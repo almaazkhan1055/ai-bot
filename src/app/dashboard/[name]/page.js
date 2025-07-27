@@ -4,12 +4,11 @@ import React from "react";
 import Dashboard from "../page";
 
 const ChatRoomPage = () => {
-  const params = useParams();
-  console.log(params.name);
+  const { name } = useParams();
 
   return (
     <Dashboard>
-      <h2>{params.name}</h2>
+      <h2>Room: {decodeURIComponent(name)}</h2>
     </Dashboard>
   );
 };
