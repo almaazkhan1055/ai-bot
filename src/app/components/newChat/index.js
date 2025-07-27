@@ -9,7 +9,7 @@ const NewChat = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const router = useRouter();
 
   const createChatRoomAndNavigate = () => {
-    let name = prompt("please enter name of the room");
+    const name = prompt("Please enter name of the room");
     if (!name) return;
 
     const newRoom = {
@@ -19,6 +19,7 @@ const NewChat = ({ isSidebarOpen, setIsSidebarOpen }) => {
     };
 
     dispatch(chatRoomListRedux(newRoom));
+
     router.push(`/dashboard/${encodeURIComponent(newRoom.name)}`);
   };
 

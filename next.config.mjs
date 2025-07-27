@@ -1,13 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/dashboard/:name*",
-        destination: "/dashboard/:name*",
-      },
-    ];
-  },
+  reactStrictMode: true,
 };
 
 export default nextConfig;
