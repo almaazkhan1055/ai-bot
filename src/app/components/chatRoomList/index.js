@@ -29,9 +29,7 @@ const ChatRoomList = ({ isSidebarOpen }) => {
           <span
             key={room.id}
             className="flex items-center gap-2 text-md hover:bg-[#303030] cursor-pointer rounded-full p-2"
-            onClick={() =>
-              router.push(`/chatroom/${encodeURIComponent(room.name)}`)
-            }
+            onClick={() => router.push(`/chatroom/${room.id}`)}
           >
             {room.name}
           </span>

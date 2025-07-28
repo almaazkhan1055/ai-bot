@@ -1,4 +1,4 @@
-import { CHATROOMLIST, SEARCHROOM } from "./action";
+import { ADDCHATTOROOM, CHATROOMLIST, SEARCHROOM } from "./action";
 
 export const initialState = {
   chatRoomList: [],
@@ -18,5 +18,26 @@ export const reducer = (state = initialState, action) => {
       searchQuery: action.payload,
     };
   }
+  if (action.type === ADDCHATTOROOM) {
+    return {
+      ...state,
+      chatRoomList: state.chatRoomList.map((room) =>
+        room.id === Number(action.payload.roomId)
+          ? {
+              ...room,
+              chats: [
+                ...(room.chats || []),
+                {
+                  question: action.payload.question,
+                  answer: action.payload.answer,
+                  timestamp: action.payload.timestamp,
+                },
+              ],
+            }
+          : room
+      ),
+    };
+  }
+
   return state;
 };

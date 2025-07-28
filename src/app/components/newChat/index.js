@@ -19,8 +19,7 @@ const NewChat = ({ isSidebarOpen, setIsSidebarOpen }) => {
     };
 
     dispatch(chatRoomListRedux(newRoom));
-
-    router.push(`/chatroom/${encodeURIComponent(newRoom.name)}`);
+    router.push(`/chatroom/${newRoom.id}`);
   };
 
   return (
