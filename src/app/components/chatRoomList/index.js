@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const ChatRoomList = ({ isSidebarOpen }) => {
+const ChatRoomList = ({ isSidebarOpen, chatRooms }) => {
   const router = useRouter();
-  const chatroomlist = useSelector((state) => state.chatRoomList);
+  const chatroomlist = chatRooms;
   const searchQuery = useSelector((state) => state.searchQuery);
 
   const filteredList = chatroomlist.filter((room) =>

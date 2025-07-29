@@ -1,16 +1,30 @@
 "use client";
 import Dashboard from "@/app/dashboard/page";
+import React, { useEffect, useState } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useParams } from "next/navigation";
-import React from "react";
-import { useSelector } from "react-redux";
+import { db } from "../../../../firebase.config";
 
 const ChatRoomPage = () => {
   const { id } = useParams();
-  const chatroomList = useSelector((state) => state.chatRoomList);
-  const currentRoom = chatroomList.find((room) => room.id === Number(id));
+  const [currentRoom, setCurrentRoom] = useState({});
 
-  const formatTimestamp = (isoString) => {
-    const date = new Date(isoString);
+  useEffect(() => {
+    if (!id) return;
+
+    const unsubscribe = onSnapshot(doc(db, "chatrooms", id), (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        setCurrentRoom(docSnapshot.data());
+      }
+    });
+
+    return () => unsubscribe();
+  }, [id]);
+
+  const formatTimestamp = (timestamp) => {
+    if (!timestamp) return "N/A";
+    const date = new Date(timestamp);
+    if (isNaN(date.getTime())) return "N/A";
     return date.toLocaleString("en-IN", {
       day: "2-digit",
       month: "2-digit",
@@ -21,11 +35,19 @@ const ChatRoomPage = () => {
     });
   };
 
+  useEffect(() => {
+    const chatBox = document.getElementById("chat-box");
+    chatBox?.scrollTo({ top: chatBox.scrollHeight, behavior: "smooth" });
+  }, [currentRoom?.chats?.length]);
+
   return (
     <Dashboard>
-      <div className="p-4 w-[60%] overflow-y-scroll h-[70%]">
-        {currentRoom?.chats?.map((obj) => (
-          <div key={obj.id}>
+      <div
+        id="chat-box"
+        className="w-full md:w-[80%] h-[calc(100vh-250px)] overflow-y-scroll hide-scrollbar"
+      >
+        {currentRoom?.chats?.map((obj, index) => (
+          <div key={index}>
             <div className="text-right text-gray-300 mb-5">
               <p className="font-semibold">{obj.question}</p>
               <span className="text-xs text-gray-700">

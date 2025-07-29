@@ -43,7 +43,7 @@ const Dashboard = ({ children }) => {
       <Sidebar />
       <Wrapper>
         <Navbar handleLogout={handleLogout} loading />
-        <div className="min-h-full flex flex-col md:gap-10 items-center justify-center p-4">
+        <div className="min-h-screen flex flex-col md:gap-10 items-center justify-around p-4">
           {children}
           <Prompt />
         </div>

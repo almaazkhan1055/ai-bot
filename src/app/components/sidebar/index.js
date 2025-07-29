@@ -1,12 +1,32 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiMenuFill } from "react-icons/ri";
 import NewChat from "../newChat";
 import SearchChat from "../searchChat";
 import ChatRoomList from "../chatRoomList";
+import { collection, onSnapshot, query } from "firebase/firestore"; // removed `orderBy`
+import { db } from "../../../../firebase.config";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [chatRooms, setChatRooms] = useState([]);
+
+  console.log("chatRooms", chatRooms);
+
+  useEffect(() => {
+    const roomsRef = collection(db, "chatrooms");
+    const q = query(roomsRef); // 🔥 Removed orderBy("createdAt")
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const rooms = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setChatRooms(rooms);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div
@@ -29,6 +49,7 @@ const Sidebar = () => {
           onClick={() => setIsSidebarOpen((prev) => !prev)}
         />
       </div>
+
       <div
         className={`flex flex-col ${
           isSidebarOpen ? "px-4" : "items-center"
@@ -43,7 +64,8 @@ const Sidebar = () => {
           setIsSidebarOpen={setIsSidebarOpen}
         />
       </div>
-      <ChatRoomList isSidebarOpen={isSidebarOpen} />
+
+      <ChatRoomList isSidebarOpen={isSidebarOpen} chatRooms={chatRooms} />
     </div>
   );
 };

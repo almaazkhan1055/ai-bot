@@ -1,14 +1,16 @@
 import { chatRoomListRedux } from "@/app/redux/action";
+import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { CiChat1 } from "react-icons/ci";
 import { useDispatch } from "react-redux";
+import { db } from "../../../../firebase.config";
 
 const NewChat = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const createChatRoomAndNavigate = () => {
+  const createChatRoomAndNavigate = async () => {
     const name = prompt("Please enter name of the room");
     if (!name) return;
 
@@ -17,8 +19,8 @@ const NewChat = ({ isSidebarOpen, setIsSidebarOpen }) => {
       id: Date.now(),
       chats: [],
     };
-
     dispatch(chatRoomListRedux(newRoom));
+    await setDoc(doc(db, "chatrooms", newRoom.id.toString()), newRoom);
     router.push(`/chatroom/${newRoom.id}`);
   };
 
