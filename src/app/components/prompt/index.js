@@ -61,7 +61,7 @@ const Prompt = () => {
   };
 
   return (
-    <div className="bg-[#303030] md:w-[60%] w-full rounded-3xl p-2 sticky bottom-10">
+    <div className="bg-[#303030] md:w-[80%] w-full rounded-3xl p-2 sticky bottom-10">
       <input
         type="text"
         value={prompt}
